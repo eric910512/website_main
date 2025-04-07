@@ -20,7 +20,7 @@
         <!-- Title -->
         <div class="row mb-3">
             <div class="col-md-12 text-center">
-                <h1 class="page-title">ABOUT ME</h1>
+                <h1 class="page-title">關於我</h1>
             </div>
         </div>
         <!-- End of Title -->
@@ -32,14 +32,11 @@
                     <div class="card-body">
                         <div class="border-0 mb-3">
                             <div class="card-body text-center">
-                                <p class="first-paragraph">{{ content[0] }}</p>
-                            </div>
-                        </div>
-                        <div class="card inner-card inner-card-design w-100">
-                            <div class="card-body">
-                                {% for paragraph in content[1:] %}
-                                    <p class="paragraph"><i class="arrow bx bxs-right-arrow"></i>{{ paragraph }}</p>
-                                {% endfor %}
+                                <p class="first-paragraph">黃彥誠是一名23歲的學生，是一名土生土長的高雄人，
+
+                                    興趣是吃吃到飽還有睡到自然醒，目前的煩惱是在聯邦學習的
+                                    
+                                    研究中找到屬於他的研究主題。</p>
                             </div>
                         </div>
                     </div>
@@ -52,25 +49,25 @@
                     <div class="card-body d-flex flex-column align-items-center">
                         <div class="border-0 mb-3">
                             <div class="card-body text-center">
-                                <p class="first-paragraph">Development Education</p>
+                                <p class="first-paragraph">學歷</p>
                             </div>
                         </div>
                         <div class="card inner-card inner-card-design mb-3 w-100 mx-auto">
                             <div class="card-body text-center">
-                                <strong class="paragraph"><i class="school-name bx bxs-school"> IT School</i></strong>
-                                <p class="paragraph">Python Programming</p>
-                                <p class="text-muted">Apr 2022 - Sep 2022</p><br>
+                                <strong class="paragraph"><i class="school-name bx bxs-school"> 國立臺東大學</i></strong>
+                                <p class="paragraph">資訊工程學系</p>
+                                <p class="text-muted"> 2020 9月 -  2024 6月</p><br>
                             </div>
                         </div>
                         <div class="card inner-card inner-card-design mb-3 w-100 mx-auto">
                             <div class="card-body text-center">
-                                <strong class="paragraph"><i class="school-name bx bx-library"> HarvardX</i></strong>
-                                <p class="paragraph">CS50x - Introduction to Computer Science</p>
-                                <p class="text-muted">Oct 2022 - Present</p>
+                                <strong class="paragraph"><i class="school-name bx bx-library"> 高雄科技大學</i></strong>
+                                <p class="paragraph">電子工程學系 <br> 資訊工程組</p>
+                                <p class="text-muted"> 2024 8月 - 至今</p>
                             </div>
                         </div>
                         <button class="btn mt-auto mx-auto w-100">
-                            <a href="{{ url_for('contact') }}">CONTACT ME <i class="bx bx-right-arrow-circle px-2"></i></a>
+                            <a href="{{ url_for('contact') }}">沒事最好不要聯絡我 <i class="bx bx-right-arrow-circle px-2"></i></a>
                         </button>
                     </div>
                 </div>

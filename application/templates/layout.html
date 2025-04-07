@@ -64,11 +64,65 @@
                     <div class="col-sm-12">
                         <a href="https://github.com/geogeolo"><i class="social-icon bx bxl-github px-1"></i></a>
                         <a href="{{ url_for('result') }}"><i class="social-icon bx bxl-gmail px-1"></i></a>
-                        
+                        <!-- 客服機器人按鈕 -->
+                        <button id="chatbot-toggle" class="btn btn-sm btn-outline-primary ms-2">客服機器人</button>
                     </div>
                 </div>
             </div>
+        <!-- 聊天視窗 -->
+            <div id="chatbot-window" style="display: none; position: fixed; bottom: 60px; right: 20px; width: 300px; height: 400px; background: white; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.2); z-index: 9999; border-radius: 10px; overflow: hidden;">
+                <div style="background-color: #0d6efd; color: white; padding: 10px;">Chatbot</div>
+                <div id="chat-content" style="padding: 10px; height: 300px; overflow-y: auto;"></div>
+                    <div style="padding: 10px;">
+                        <input type="text" id="chat-input" class="form-control" placeholder="輸入訊息">
+                        <button id="chat-send" class="btn btn-primary btn-sm mt-2 w-100">送出</button>
+                    </div>
+            </div>
         </footer>
         <!-- End of Footer -->
+        <script>
+            const toggleBtn = document.getElementById('chatbot-toggle');
+            const chatWindow = document.getElementById('chatbot-window');
+            const chatSend = document.getElementById('chat-send');
+            const chatInput = document.getElementById('chat-input');
+            const chatContent = document.getElementById('chat-content');
+        
+            toggleBtn.addEventListener('click', () => {
+                chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
+            });
+        
+            chatSend.addEventListener('click', sendMessage);
+
+                // ✅ 新增這段：監聽 Enter 鍵
+                chatInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault(); // 防止換行
+                        sendMessage();
+                    }
+                });
+
+                function sendMessage() {
+                    const userMsg = chatInput.value.trim();
+                    if (!userMsg) return;
+
+                    chatContent.innerHTML += `<div><strong>你：</strong> ${userMsg}</div>`;
+
+                    fetch('/chatbot', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: userMsg })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        chatContent.innerHTML += `<div><strong>機器人：</strong> ${data.reply}</div>`;
+                        chatContent.scrollTop = chatContent.scrollHeight;
+                    });
+
+                    chatInput.value = '';
+                }
+        </script>
+        
+
+
     </body>
 </html>

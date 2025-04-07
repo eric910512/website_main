@@ -1,10 +1,11 @@
 # Sets up the routes for all the pages
 
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response , jsonify
 from flask_caching import Cache
 from config import TEMPLATES_PATH, TEXT_PATH
 from application.helpers import *
 
+from openai import OpenAI
 
 app = Flask(__name__, template_folder=TEMPLATES_PATH)
 app.jinja_env.filters["is_active"] = is_active
@@ -83,3 +84,27 @@ def result():
     """Renders the 'Result' page of the website."""
 
     return render_template("result.html")
+
+
+
+
+from openai import OpenAI
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+import sys, io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')  # 解決中文字輸出錯誤
+
+@app.route("/chatbot", methods=["POST"])
+def chatbot():
+    user_msg = request.json.get("message")
+
+    try:
+        response = client.chat.completions.create(  # ✅ 新版語法
+            model="gpt-4o-mini-2024-07-18",
+            messages=[{"role": "user", "content": user_msg}]
+        )
+        reply = response.choices[0].message.content
+        return jsonify({"reply": reply.strip()})
+    except Exception as e:
+        print("❌ 發生錯誤：", str(e))
+        return jsonify({"reply": "抱歉，機器人暫時無法回應。"}), 500
